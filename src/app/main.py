@@ -14,7 +14,7 @@ def read_root():
     return {
         "apiversion": "1",
         "author": "Maua-Dev",
-        "color": "#8AB479",
+        "color": "#D3BB31",
         "head": "tiger-king",
         "tail": "hook",
         "version": "1.0.0"
@@ -28,7 +28,7 @@ def start():
 def move(request: dict):
     print(request)
     response = {
-        "move": "right",
+        "move": "left",
         "shout": "I'm moving right!"
     }
     return response
