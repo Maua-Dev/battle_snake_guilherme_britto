@@ -21,8 +21,8 @@ class Test_App:
     def test_move(self):
         resp = move({"hello": "world"})
 
-        assert resp["move"] in ["up", "down", "left", "right"]
-        assert resp["shout"] == f"I'm moving {resp['move']}!"
+        assert resp["move"] == "right"
+        assert resp["shout"] == "I'm moving right!"
         
     def test_end(self):
         resp = end()

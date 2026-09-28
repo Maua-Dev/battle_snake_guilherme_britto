@@ -27,11 +27,9 @@ def start():
 @app.post("/move")
 def move(request: dict):
     print(request)
-    i = random.randint(0, 3)
-    directions = ["up", "down", "left", "right"]
     response = {
-        "move": directions[i],
-        "shout": f"I'm moving {directions[i]}!"
+        "move": "right",
+        "shout": "I'm moving right!"
     }
     return response
 
