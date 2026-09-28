@@ -14,7 +14,7 @@ def read_root():
     return {
         "apiversion": "1",
         "author": "Maua-Dev",
-        "color": "#8B0000",
+        "color": "#8AB479",
         "head": "tiger-king",
         "tail": "hook",
         "version": "1.0.0"
