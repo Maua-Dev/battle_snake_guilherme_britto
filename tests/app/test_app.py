@@ -6,10 +6,10 @@ class Test_App:
 
         assert resp == {
             "apiversion": "1",
-            "author": "Maua-Dev",
-            "color": "#8B0000",
-            "head": "tiger-king",
-            "tail": "hook",
+            "author": "mtlonge43",
+            "color": "#084B02",
+            "head": "bonhomme",
+            "tail": "coffee",
             "version": "1.0.0"
         }
         

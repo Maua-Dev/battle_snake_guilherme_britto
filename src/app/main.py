@@ -13,10 +13,10 @@ app = FastAPI()
 def read_root():
     return {
         "apiversion": "1",
-        "author": "Maua-Dev",
-        "color": "#D3BB31",
-        "head": "tiger-king",
-        "tail": "hook",
+        "author": "mtlonge43",
+        "color": "#084B02",
+        "head": "bonhomme",
+        "tail": "coffee",
         "version": "1.0.0"
     }
 
@@ -28,7 +28,7 @@ def start():
 def move(request: dict):
     print(request)
     response = {
-        "move": "left",
+        "move": "right",
         "shout": "I'm moving right!"
     }
     return response
