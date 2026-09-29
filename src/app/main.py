@@ -35,6 +35,21 @@ DIRECTIONS = {
 def calcular_distancia(voce: dict, comida: dict) -> int:
     return abs(voce["x"] - comida["x"]) + abs(voce["y"] - comida["y"])
 
+def direcao_atual(snake: dict) -> str:
+    body = snake.get("body", [])
+    if len(body) < 2:
+        return "right"
+
+    head, neck = body[0], body[1]
+    delta = (head["x"] - neck["x"], head["y"] - neck["y"])
+
+    for name, vector in DIRECTIONS.items():
+        if vector == delta:
+            return name
+            
+    return "right"
+
+
 @app.post("/move")
 def move(request: dict):
     print(request)
