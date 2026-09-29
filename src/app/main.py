@@ -24,6 +24,17 @@ def read_root():
 def start():
     return "ok"
 
+DIRECTIONS = {
+    "up": (0, 1),
+    "down": (0, -1),
+    "left": (-1, 0),
+    "right": (1, 0),
+}
+
+
+def calcular_distancia(voce: dict, comida: dict) -> int:
+    return abs(voce["x"] - comida["x"]) + abs(voce["y"] - comida["y"])
+
 @app.post("/move")
 def move(request: dict):
     print(request)
