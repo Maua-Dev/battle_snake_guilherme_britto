@@ -49,6 +49,29 @@ def direcao_atual(snake: dict) -> str:
             
     return "right"
 
+def seguro_avancar(direcao: str, request: dict, snake: dict, comida: dict | None) -> bool:
+    board = request["board"]
+    head = snake["head"]
+    delta_x, delta_y = DIRECTIONS[direcao]
+    next_position = {"x": head["x"] + delta_x, "y": head["y"] + delta_y}
+
+    if not (0 <= next_position["x"] < board["width"]):
+        return False
+    if not (0 <= next_position["y"] < board["height"]):
+        return False
+
+    occupied = [
+        segment
+        for other_snake in board.get("snakes", [])
+        for segment in other_snake.get("body", [])
+    ]
+    if comida != next_position:
+        own_body = snake.get("body", [])
+        if own_body:
+            occupied.remove(own_body[-1]) if own_body[-1] in occupied else None
+
+    return next_position not in occupied
+
 
 @app.post("/move")
 def move(request: dict):
