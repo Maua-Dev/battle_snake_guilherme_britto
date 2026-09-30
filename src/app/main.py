@@ -75,12 +75,56 @@ def seguro_avancar(direcao: str, request: dict, snake: dict, comida: dict | None
 
 @app.post("/move")
 def move(request: dict):
-    print(request)
-    response = {
-        "move": "right",
-        "shout": "I'm moving right!"
-    }
-    return response
+    board = request.get("board", {})
+    snake = request.get("you", {})
+    head = snake.get("head")
+    foods = board.get("food", [])
+
+    if not head or not foods or "width" not in board or "height" not in board:
+        return {"move": direcao_atual(snake), "shout": "Continuing my path."}
+
+    comida_prox = min(foods, key=lambda food: calcular_distancia(head, food))
+    distancia = calcular_distancia(head, comida_prox)
+    opponents = [
+        other
+        for other in board.get("snakes", [])
+        if other.get("id") != snake.get("id") and other.get("head")
+    ]
+    opponent_distance = min(
+        (calcular_distancia(other["head"], comida_prox) for other in opponents),
+        default=float("inf"),
+    )
+
+    heading = direcao_atual(snake)
+    if distancia < opponent_distance:
+        movimentos = sorted(
+            DIRECTIONS,
+            key=lambda direction: calcular_distancia(
+                {
+                    "x": head["x"] + DIRECTIONS[direction][0],
+                    "y": head["y"] + DIRECTIONS[direction][1],
+                },
+                comida_prox,
+            ),
+        )
+        melhor_movimento = movimentos
+        shout = "Going for the nearest food!"
+    else:
+        melhor_movimento = [heading] + [
+            direction for direction in DIRECTIONS if direction != heading
+        ]
+        shout = "Another snake is closer; continuing my path."
+
+    selected_move = next(
+        (
+            direction
+            for direction in melhor_movimento
+            if seguro_avancar(direction, request, snake, comida_prox)
+        ),
+        heading,
+    )
+    return {"move": selected_move, "shout": shout}
+
 
 @app.post("/end")
 def end():
