@@ -1,4 +1,6 @@
 import random
+from typing import Optional
+
 from fastapi import FastAPI
 from mangum import Mangum
 
@@ -49,7 +51,7 @@ def direcao_atual(snake: dict) -> str:
             
     return "right"
 
-def seguro_avancar(direcao: str, request: dict, snake: dict, comida: dict | None) -> bool:
+def seguro_avancar(direcao: str, request: dict, snake: dict, comida: Optional[dict]) -> bool:
     board = request["board"]
     head = snake["head"]
     delta_x, delta_y = DIRECTIONS[direcao]
