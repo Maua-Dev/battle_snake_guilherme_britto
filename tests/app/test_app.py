@@ -19,10 +19,10 @@ class Test_App:
         assert resp == "ok"
         
     def test_move(self):
-        resp = move({"hello": "world"})
+        resp = move(self.make_request(food={"x": 5, "y": 3}, opponent_head={"x": 0, "y": 0}))
 
         assert resp["move"] == "right"
-        assert resp["shout"] == "I'm moving right!"
+        assert resp["shout"] == "Going for the nearest food!"
         
     def test_end(self):
         resp = end()
