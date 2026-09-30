@@ -24,6 +24,31 @@ class Test_App:
         assert resp["move"] == "right"
         assert resp["shout"] == "Going for the nearest food!"
 
+    def test_keeps_heading_when_opponent_is_closer_to_food(self):
+        request = self.make_request(food={"x": 6, "y": 3}, opponent_head={"x": 5, "y": 3})
+
+        resp = move(request)
+
+        assert resp["move"] == "right"
+        assert resp["shout"] == "Another snake is closer; continuing my path."
+
+    def test_keeps_heading_when_opponent_is_tied(self):
+        request = self.make_request(food={"x": 6, "y": 3}, opponent_head={"x": 4, "y": 2})
+
+        resp = move(request)
+
+        assert resp["move"] == "right"
+        assert resp["shout"] == "Another snake is closer; continuing my path."
+
+    def test_avoids_wall_when_continuing_heading(self):
+        request = self.make_request(food={"x": 4, "y": 2}, opponent_head={"x": 4, "y": 2})
+        request["you"]["head"] = {"x": 6, "y": 3}
+        request["you"]["body"] = [{"x": 6, "y": 3}, {"x": 5, "y": 3}]
+
+        resp = move(request)
+
+        assert resp["move"] == "up"
+        
     @staticmethod
     def make_request(food, opponent_head):
         you = {
